@@ -50,6 +50,8 @@ class ScreenshotUI {
     material: any;
     request: ScreenshotRequest;
 
+    firstScreenshot: boolean;
+
     initialize() {
         window.addEventListener('message', event => {
             this.request = event.data.request;
@@ -112,6 +114,7 @@ class ScreenshotUI {
 
         this.animate = this.animate.bind(this);
 
+        this.firstScreenshot = true;
         requestAnimationFrame(this.animate);
     }
 
@@ -138,14 +141,19 @@ class ScreenshotUI {
     animate() {
         requestAnimationFrame(this.animate);
 
-        this.renderer.clear();
-        this.renderer.render(this.sceneRTT, this.cameraRTT, this.rtTexture, true);
-
         if (this.request) {
+            this.renderer.clear();
+            this.renderer.render(this.sceneRTT, this.cameraRTT, this.rtTexture, true);
+
             const request = this.request;
             this.request = null;
 
-            this.handleRequest(request);
+            if (this.firstScreenshot) {
+                this.firstScreenshot = false;
+                setTimeout(() => {this.handleRequest(request)}, 250);
+            } else {
+                this.handleRequest(request);
+            }
         }
     }
 
