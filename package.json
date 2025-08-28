@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "npm install webpack-cli@3.3.11 && webpack --config client.config.js --mode production --openssl-legacy-provider && webpack --config server.config.js --mode production --openssl-legacy-provider && webpack --config ui.config.js --mode production --openssl-legacy-provider"
+    "build": "webpack --config client.config.js --mode production --openssl-legacy-provider && webpack --config server.config.js --mode production --openssl-legacy-provider && webpack --config ui.config.js --mode production --openssl-legacy-provider"
   },
   "author": "",
   "license": "MIT",
