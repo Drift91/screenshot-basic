@@ -49,7 +49,6 @@ class ScreenshotUI {
     cameraRTT: any;
     material: any;
     request: ScreenshotRequest;
-	nextFrame: boolean;
 
     initialize() {
         window.addEventListener('message', event => {
@@ -115,7 +114,8 @@ class ScreenshotUI {
 
         requestAnimationFrame(this.animate);
 
-        this.nextFrame = false;
+        this.renderer.clear();
+        this.renderer.render(this.sceneRTT, this.cameraRTT, this.rtTexture, true);
     }
 
     resize() {
@@ -141,7 +141,7 @@ class ScreenshotUI {
     animate() {
         requestAnimationFrame(this.animate);
 
-        if (this.nextFrame) {
+        if (this.request) {
             this.renderer.clear();
             this.renderer.render(this.sceneRTT, this.cameraRTT, this.rtTexture, true);
 
@@ -149,12 +149,6 @@ class ScreenshotUI {
             this.request = null;
 
             this.handleRequest(request);
-
-            this.nextFrame = false;
-        }
-
-        if (this.request) {
-            this.nextFrame = true;
         }
     }
 
